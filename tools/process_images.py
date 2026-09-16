@@ -9,6 +9,7 @@ refreshes each work's pixel size and colour palette in site.json.
 """
 import json, glob, os, colorsys
 from pathlib import Path
+import numpy as np
 from PIL import Image, ImageOps, ImageChops
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -16,6 +17,9 @@ SRC = ROOT / 'assets' / 'src'
 TRIM_TOLERANCE = 28   # how far a pixel must differ from the backdrop to count as artwork
 EDGE_COVERAGE = .55   # fraction of a line that must be artwork for it to be an edge
 EDGE_SEARCH = .22     # how far in from each side to look for that edge
+SHAVE_FLAT = .45      # a strip this much flatter than the picture's middle is wall
+SHAVE_BRIGHT = 4      # ...and this much lighter than it
+SHAVE_MAX = .14       # never peel more than this off one side
 
 
 def autocrop(im):
@@ -62,6 +66,39 @@ def autocrop(im):
     return im.crop((l + left, t + top, l + right, t + bottom))
 
 
+def shave_backdrop(im):
+    """Peel any wall left on the edges after the bounding-box crop.
+
+    The seamless backdrop reads flatter and lighter than the piece itself, so
+    thin strips come off an edge only while that edge still looks like wall.
+    """
+    g = np.asarray(im.convert('L'), dtype=np.float32)
+    H, W = g.shape
+    core = g[int(H * .25):int(H * .75), int(W * .25):int(W * .75)]
+    cm, cs = core.mean(), max(core.std(), 1e-6)
+    step = .004
+    sy, sx = max(3, int(H * step)), max(3, int(W * step))
+    t, b, l, r = 0, H, 0, W
+    is_wall = lambda s: s.std() / cs < SHAVE_FLAT and s.mean() - cm > SHAVE_BRIGHT
+
+    for _ in range(int(SHAVE_MAX / step)):
+        if not is_wall(g[t:t + sy, l:r]): break
+        t += sy
+    for _ in range(int(SHAVE_MAX / step)):
+        if not is_wall(g[b - sy:b, l:r]): break
+        b -= sy
+    for _ in range(int(SHAVE_MAX / step)):
+        if not is_wall(g[t:b, l:l + sx]): break
+        l += sx
+    for _ in range(int(SHAVE_MAX / step)):
+        if not is_wall(g[t:b, r - sx:r]): break
+        r -= sx
+
+    if b - t < H * .6 or r - l < W * .6:
+        return im                      # would cut into the painting; leave it alone
+    return im.crop((l, t, r, b))
+
+
 def palette(im, n=5, min_distance=46):
     """Five distinct colours from the painting, ordered light to dark.
 
@@ -87,7 +124,7 @@ def palette(im, n=5, min_distance=46):
 def render(src, out_base, widths, crop):
     im = ImageOps.exif_transpose(Image.open(src)).convert('RGB')
     if crop:
-        im = autocrop(im)
+        im = shave_backdrop(autocrop(im))
     for suffix, w, q in widths:
         r = im.copy(); r.thumbnail((w, w * 4))
         r.save(f'{out_base}{suffix}.webp', 'WEBP', quality=q, method=6)
