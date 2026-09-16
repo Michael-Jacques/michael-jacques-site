@@ -5,6 +5,19 @@ objectandarchive.com: split hero with a rotating painting and an oversized
 display name, mono captions over serif display type, a filterable catalogue,
 and a spec-card detail page for each work.
 
+## Publishing a change
+
+The site is hosted on GitHub Pages out of `Michael-Jacques/michael-jacques-site`
+and serves at https://www.michael-jacques.com. To make a change: edit
+`site.json`, then run
+
+```bash
+./publish.sh "sold Higher Self"
+```
+
+That rebuilds, commits, and pushes. Pages redeploys on its own, usually within
+a minute. Add `--images` when you've dropped new photos into `assets/src`.
+
 ## Editing
 
 All content lives in `site.json`. Nothing is hard-coded in the templates except
@@ -44,29 +57,39 @@ python3 -m http.server 8791
 
 Then open http://localhost:8791.
 
-## Deploying
+## Hosting
 
-All URLs are relative, so the site runs from any host or subfolder.
+GitHub Pages, from `main` at the repo root. All URLs are relative, so the site
+also runs from any other host or from a subfolder.
 
-**GitHub Pages** (same setup as michaeljacques.work):
+`CNAME` is generated only when `site.json` sets `custom_domain`. Leave that
+field out while a domain still points somewhere else — GitHub redirects the
+`github.io` preview URL to the custom domain, so setting it early makes the new
+site impossible to review.
 
-1. Create a repo and push this folder.
-2. Settings → Pages → Deploy from a branch → `main` / `/ (root)`.
-3. `CNAME` already contains `www.michael-jacques.com`.
-
-**DNS** — the domain is currently on Squarespace and still points there. To move it:
+DNS lives at Squarespace (registrar and nameservers) and points here:
 
 | Record | Host | Value |
 | --- | --- | --- |
-| A | @ | 185.199.108.153 |
-| A | @ | 185.199.109.153 |
-| A | @ | 185.199.110.153 |
-| A | @ | 185.199.111.153 |
-| CNAME | www | `<github-user>.github.io` |
+| A | @ | 185.199.108.153, .109.153, .110.153, .111.153 |
+| CNAME | www | `michael-jacques.github.io` |
 
-Remove the existing Squarespace A records (198.185.159.144/145,
-198.49.23.144/145) and the `ext-sq.squarespace.com` www CNAME first. Keep the
-Squarespace site up until Pages serves correctly.
+### If HTTPS stops working
+
+GitHub issues the certificate itself, but it can stall if the custom domain was
+set before DNS pointed here. Clearing and re-setting the domain restarts it:
+
+```bash
+gh api -X PUT repos/Michael-Jacques/michael-jacques-site/pages -f cname=''
+gh api -X PUT repos/Michael-Jacques/michael-jacques-site/pages -f cname='www.michael-jacques.com'
+```
+
+The same thing is available in the repo's Settings → Pages, by clearing the
+Custom domain box, saving, retyping it, and saving again. Check progress with:
+
+```bash
+gh api repos/Michael-Jacques/michael-jacques-site/pages --jq '{status,cname,cert:.https_certificate.state}'
+```
 
 ## Newsletter form
 
