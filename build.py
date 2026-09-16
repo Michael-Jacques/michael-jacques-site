@@ -234,7 +234,10 @@ def page_series(i, s):
     ws = [dict(w, series=s) for w in s['works']]
     nxt = S['series'][(i + 1) % len(S['series'])]
     avail = sum(1 for w in ws if not w['sold'])
-    sizes = sorted({w['size'] for w in ws}, key=lambda x: -int(re.findall(r'\d+', x)[0]))
+    def _dims(t):
+        a, b = (int(n) for n in re.findall(r'\d+', t)[:2])
+        return (-max(a, b), -min(a, b))          # largest first, and stable on ties
+    sizes = sorted({w['size'] for w in ws}, key=_dims)
     return head(f'{s["name"]} · Michael Jacques', s['blurb'], f'/series/{s["slug"]}.html', f'/assets/{s["install"]}.webp') + header('/work.html', blend=True) + f"""
 <section class="series-hero">
   <div class="series-hero__bg" style="background-image:url(/assets/{s['install']}.webp)" aria-hidden="true"></div>
