@@ -1,0 +1,667 @@
+{
+ "name": "Michael Jacques",
+ "domain": "https://www.michael-jacques.com",
+ "tagline": "Painter · Miami, FL",
+ "hero_series": "everything",
+ "email": "michaelsjacques@gmail.com",
+ "phone": "+1 (954) 647-9037",
+ "instagram": "michaeljacquesart",
+ "hero_statement": "Paintings that map the emotional architecture beneath everyday life.",
+ "manifesto": "I build each piece from a feeling first, merging figurative forms with organic elements to reveal the internal landscapes we usually hide. These paintings aren’t meant to explain anything; they’re meant to slow you down.",
+ "bio": [
+  "Michael Jacques is an American painter based in Miami whose work explores the tension and harmony between the inner world and the natural landscape. Self-taught and driven by a multidisciplinary background spanning design, creative strategy, and experiential art, Jacques approaches painting as a way to map the emotional architecture that sits beneath everyday life.",
+  "His mixed-media practice blends figurative forms, abstract environments, and symbolic motifs from nature, creating compositions that feel both intimate and expansive. Jacques’ work often integrates collage, layered texture, and bold yet restrained color, resulting in pieces that read like snapshots of the subconscious moments where human interiority meets the wider environment.",
+  "Jacques has begun building a growing collector base in the U.S., exhibiting in local shows and private placements while preparing new series for gallery and art-fair submission. His paintings resonate with viewers drawn to introspection, symbolism, and contemporary surrealism."
+ ],
+ "statement": "My work explores the meeting point between inner experience and the natural world where emotion, memory, and environment blur into a single visual language. I build each piece from a feeling first, merging figurative forms with organic elements to reveal the internal landscapes we usually hide. These paintings aren’t meant to explain anything; they’re meant to slow the viewer down, to create a moment where intuition leads and meaning surfaces on its own. By blending human interiors with the exterior world, I aim to show how our inner states continually shape the reality we see.",
+ "shows": [
+  {
+   "year": "2025",
+   "name": "The Other Art Fair, Saatchi Art",
+   "place": "Brooklyn, NY"
+  },
+  {
+   "year": "2023",
+   "name": "Los Angeles Municipal Art Gallery",
+   "place": "Los Angeles, CA"
+  },
+  {
+   "year": "2023",
+   "name": "Beverly Hills Art Show",
+   "place": "Beverly Hills, CA"
+  },
+  {
+   "year": "2023",
+   "name": "Pershing Art Show",
+   "place": "Los Angeles, CA"
+  },
+  {
+   "year": "2022",
+   "name": "Spectrum Art Fair (Art Basel week)",
+   "place": "Miami, FL"
+  },
+  {
+   "year": "2022",
+   "name": "The Other Art Fair, Saatchi Art",
+   "place": "Los Angeles, CA + Dallas, TX"
+  }
+ ],
+ "collecting": [
+  {
+   "key": "available",
+   "title": "Available Works",
+   "text": "Every painting on this site that isn’t marked sold is available directly from the studio. Prices are listed. Send a note with the title and I’ll reply with details, shipping, and a studio video of the piece."
+  },
+  {
+   "key": "commissions",
+   "title": "Commissions",
+   "text": "A small number of commissions each year, usually 36\" and up. We start from a feeling, a place, or a person, and I share sketches before anything touches canvas."
+  },
+  {
+   "key": "trade",
+   "title": "Interior Designers + Trade",
+   "text": "Working with designers, stagers, and hospitality projects that need original work at scale. Series can be placed together, and larger sizes are possible on request."
+  },
+  {
+   "key": "studio",
+   "title": "Studio Visits",
+   "text": "The studio is in Miami and open by appointment. Come see the work in person, in daylight, before you decide."
+  }
+ ],
+ "series": [
+  {
+   "slug": "under",
+   "name": "Under My Own Skin",
+   "year": "2025",
+   "blurb": "The newest body of work. Faces layered over faces, painted in flat, cut-paper color. What we carry underneath, and how it surfaces when no one is looking.",
+   "install": "hero/under",
+   "works": [
+    {
+     "slug": "scattered-thoughts",
+     "title": "Scattered Thoughts",
+     "year": 2025,
+     "medium": "acrylic on canvas",
+     "size": "48\" x 36\"",
+     "price": "$4,500",
+     "sold": false,
+     "w": 1581,
+     "h": 2029,
+     "palette": [
+      "#bbbab1",
+      "#d19f72",
+      "#908a7c",
+      "#c18741",
+      "#100b09"
+     ]
+    },
+    {
+     "slug": "around-we-go",
+     "title": "Around We Go",
+     "year": 2025,
+     "medium": "acrylic on canvas",
+     "size": "48\" x 36\"",
+     "price": "$4,500",
+     "sold": false,
+     "w": 1578,
+     "h": 2027,
+     "palette": [
+      "#e4c3a9",
+      "#c1906f",
+      "#8a8682",
+      "#323132",
+      "#151417"
+     ]
+    },
+    {
+     "slug": "into-the-abyss",
+     "title": "Into The Abyss",
+     "year": 2025,
+     "medium": "acrylic on canvas",
+     "size": "40\" x 30\"",
+     "price": "$2,500",
+     "sold": true,
+     "w": 1352,
+     "h": 1730,
+     "palette": [
+      "#e3bd89",
+      "#aaad9d",
+      "#545754",
+      "#3c3332",
+      "#1f1918"
+     ]
+    },
+    {
+     "slug": "second-glance",
+     "title": "Second Glance",
+     "year": 2025,
+     "medium": "acrylic on canvas",
+     "size": "40\" x 30\"",
+     "price": "$2,500",
+     "sold": false,
+     "w": 1352,
+     "h": 1735,
+     "palette": [
+      "#d49980",
+      "#8d8c7b",
+      "#b47941",
+      "#76473a",
+      "#1b1815"
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "days-are-short",
+   "name": "The days are short, the years are long",
+   "year": "2023",
+   "blurb": "Figures dissolving into landscape and back again. Raw canvas, saturated color, and the feeling of a season passing faster than you can hold it.",
+   "install": "hero/days-are-short",
+   "works": [
+    {
+     "slug": "higher-self",
+     "title": "Higher Self",
+     "year": 2023,
+     "medium": "acrylic on raw canvas",
+     "size": "48\" x 36\"",
+     "price": "$4,500",
+     "sold": false,
+     "w": 2059,
+     "h": 1571,
+     "palette": [
+      "#bca588",
+      "#6bb1b7",
+      "#856349",
+      "#1f6762",
+      "#1b2e30"
+     ]
+    },
+    {
+     "slug": "here-we-go-again",
+     "title": "Here We Go Again",
+     "year": 2023,
+     "medium": "acrylic on raw canvas",
+     "size": "40\" x 30\"",
+     "price": "$2,000",
+     "sold": false,
+     "w": 1537,
+     "h": 2000,
+     "palette": [
+      "#e7e5d8",
+      "#bbbbb1",
+      "#95968e",
+      "#50524f",
+      "#1e2222"
+     ]
+    },
+    {
+     "slug": "your-favorite-confection",
+     "title": "Your Favorite Confection",
+     "year": 2023,
+     "medium": "acrylic on raw canvas",
+     "size": "30\" x 24\"",
+     "price": "$1,500",
+     "sold": false,
+     "w": 1333,
+     "h": 1615,
+     "palette": [
+      "#d8d6cb",
+      "#aba79e",
+      "#8f8c84",
+      "#66645e",
+      "#0e110f"
+     ]
+    },
+    {
+     "slug": "fool-for-you",
+     "title": "Fool For You",
+     "year": 2023,
+     "medium": "acrylic on raw canvas",
+     "size": "30\" x 24\"",
+     "price": "$1,500",
+     "sold": false,
+     "w": 1328,
+     "h": 1629,
+     "palette": [
+      "#b7b6ae",
+      "#8a8881",
+      "#8a8881",
+      "#3e3e3a",
+      "#090b0a"
+     ]
+    },
+    {
+     "slug": "modern-love",
+     "title": "Modern Love",
+     "year": 2023,
+     "medium": "acrylic on raw canvas",
+     "size": "36\" x 36\"",
+     "price": "$2,000",
+     "sold": false,
+     "w": 1655,
+     "h": 1621,
+     "palette": [
+      "#dadacc",
+      "#b8bbb2",
+      "#879092",
+      "#31363d",
+      "#101a16"
+     ]
+    },
+    {
+     "slug": "come-back-home",
+     "title": "Come Back Home",
+     "year": 2023,
+     "medium": "acrylic on raw canvas",
+     "size": "36\" x 36\"",
+     "price": "$2,000",
+     "sold": false,
+     "w": 1593,
+     "h": 1556,
+     "palette": [
+      "#96adae",
+      "#96adae",
+      "#546a77",
+      "#27343e",
+      "#0d161b"
+     ]
+    },
+    {
+     "slug": "to-be-alone",
+     "title": "To Be Alone",
+     "year": 2023,
+     "medium": "acrylic on raw canvas",
+     "size": "36\" x 36\"",
+     "price": "$2,000",
+     "sold": false,
+     "w": 1658,
+     "h": 1647,
+     "palette": [
+      "#bdb5a5",
+      "#999389",
+      "#6a6864",
+      "#39393a",
+      "#0f0f0f"
+     ]
+    },
+    {
+     "slug": "look-up-for-once",
+     "title": "Look Up For Once",
+     "year": 2023,
+     "medium": "acrylic on raw canvas",
+     "size": "30\" x 40\"",
+     "price": "$2,500",
+     "sold": false,
+     "w": 2025,
+     "h": 1456,
+     "palette": [
+      "#e2ddc7",
+      "#b0af9b",
+      "#829585",
+      "#482f36",
+      "#1a0e27"
+     ]
+    },
+    {
+     "slug": "under-the-magnolia-tree",
+     "title": "Under the Magnolia Tree",
+     "year": 2023,
+     "medium": "acrylic on canvas",
+     "size": "40\" x 30\"",
+     "price": "$2,500",
+     "sold": false,
+     "w": 1581,
+     "h": 2029,
+     "palette": [
+      "#e8e5c3",
+      "#c3b464",
+      "#827a7b",
+      "#493b48",
+      "#2c151a"
+     ]
+    },
+    {
+     "slug": "deep",
+     "title": "Deep",
+     "year": 2023,
+     "medium": "acrylic on canvas",
+     "size": "48\" x 36\"",
+     "price": "$2,500",
+     "sold": false,
+     "w": 1579,
+     "h": 2028,
+     "palette": [
+      "#eae3d5",
+      "#75a7a2",
+      "#538683",
+      "#1b6260",
+      "#1d393e"
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "everything",
+   "name": "Everything as it should be",
+   "year": "2023",
+   "blurb": "A monochrome series on raw canvas. Bodies and faces pulled from the subconscious in black acrylic, the way a memory arrives before you can name it.",
+   "install": "hero/everything",
+   "works": [
+    {
+     "slug": "about-you",
+     "title": "About You",
+     "year": 2023,
+     "medium": "acrylic on raw canvas",
+     "size": "50\" x 50\"",
+     "price": "$5,500",
+     "sold": true,
+     "w": 1887,
+     "h": 1824,
+     "palette": [
+      "#f3eddd",
+      "#b1aca0",
+      "#938f85",
+      "#2f2d2a",
+      "#040404"
+     ]
+    },
+    {
+     "slug": "mixed-emotions",
+     "title": "Mixed Emotions",
+     "year": 2023,
+     "medium": "acrylic on raw canvas",
+     "size": "48\" x 36\"",
+     "price": "$3,500",
+     "sold": true,
+     "w": 1407,
+     "h": 1815,
+     "palette": [
+      "#e8eadf",
+      "#c6c8bf",
+      "#9ea19a",
+      "#737672",
+      "#535756"
+     ]
+    },
+    {
+     "slug": "the-calm-within",
+     "title": "The Calm Within",
+     "year": 2023,
+     "medium": "acrylic on raw canvas",
+     "size": "50\" x 50\"",
+     "price": "$5,500",
+     "sold": false,
+     "w": 1907,
+     "h": 1843,
+     "palette": [
+      "#fcf9ea",
+      "#c7c1b6",
+      "#99948d",
+      "#7a7772",
+      "#040506"
+     ]
+    },
+    {
+     "slug": "indecisions",
+     "title": "Indecisions",
+     "year": 2023,
+     "medium": "acrylic on raw canvas",
+     "size": "30\" x 24\"",
+     "price": "$2,500",
+     "sold": false,
+     "w": 1378,
+     "h": 1901,
+     "palette": [
+      "#eeebe0",
+      "#b3b0a7",
+      "#51514f",
+      "#363634",
+      "#0b0c0b"
+     ]
+    },
+    {
+     "slug": "introspection",
+     "title": "Introspection",
+     "year": 2023,
+     "medium": "acrylic on raw canvas",
+     "size": "50\" x 50\"",
+     "price": "$5,500",
+     "sold": false,
+     "w": 1908,
+     "h": 1843,
+     "palette": [
+      "#ebe8e1",
+      "#ccc8c1",
+      "#adaaa4",
+      "#323231",
+      "#0a0b0b"
+     ]
+    },
+    {
+     "slug": "take-me-higher",
+     "title": "Take Me Higher",
+     "year": 2023,
+     "medium": "acrylic on raw canvas",
+     "size": "50\" x 40\"",
+     "price": "$4,500",
+     "sold": false,
+     "w": 1595,
+     "h": 1925,
+     "palette": [
+      "#dad3c3",
+      "#bab4a7",
+      "#9c978c",
+      "#615e58",
+      "#0a0a09"
+     ]
+    },
+    {
+     "slug": "where-shadows-merge",
+     "title": "Where Shadows Merge",
+     "year": 2023,
+     "medium": "acrylic on raw canvas",
+     "size": "50\" x 50\"",
+     "price": "$5,500",
+     "sold": false,
+     "w": 1968,
+     "h": 1897,
+     "palette": [
+      "#c1baab",
+      "#959086",
+      "#6a6864",
+      "#4c4c4b",
+      "#16181b"
+     ]
+    },
+    {
+     "slug": "breaking-the-mold",
+     "title": "Breaking The Mold",
+     "year": 2023,
+     "medium": "acrylic on raw canvas",
+     "size": "48\" x 24\"",
+     "price": "$3,500",
+     "sold": false,
+     "w": 1198,
+     "h": 1940,
+     "palette": [
+      "#dad2c1",
+      "#b6b0a0",
+      "#827d72",
+      "#636059",
+      "#252525"
+     ]
+    },
+    {
+     "slug": "glue",
+     "title": "Glue",
+     "year": 2023,
+     "medium": "acrylic on raw canvas",
+     "size": "14\" x 11\"",
+     "price": "$500",
+     "sold": true,
+     "w": 1026,
+     "h": 1325,
+     "palette": [
+      "#c8c7c1",
+      "#888884",
+      "#5e5f5c",
+      "#3f403d",
+      "#0b0d0a"
+     ]
+    },
+    {
+     "slug": "day-dreaming",
+     "title": "Day Dreaming",
+     "year": 2023,
+     "medium": "acrylic on raw canvas",
+     "size": "10\" x 10\"",
+     "price": "$500",
+     "sold": true,
+     "w": 1300,
+     "h": 1295,
+     "palette": [
+      "#bdbbb1",
+      "#9e9c95",
+      "#656460",
+      "#656460",
+      "#2e2f2b"
+     ]
+    },
+    {
+     "slug": "intrusive-thoughts",
+     "title": "Intrusive Thoughts",
+     "year": 2023,
+     "medium": "acrylic on raw canvas",
+     "size": "10\" x 10\"",
+     "price": "$500",
+     "sold": true,
+     "w": 1326,
+     "h": 1285,
+     "palette": [
+      "#bfbdb6",
+      "#888682",
+      "#6b6a67",
+      "#3f3f3c",
+      "#181817"
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "fascination",
+   "name": "Fascination",
+   "year": "2022",
+   "blurb": "The earliest series. Dense, jewel-toned compositions where several people share one head. Obsession, attention, and the crowd inside a single mind.",
+   "install": "hero/fascination",
+   "works": [
+    {
+     "slug": "new-in-town",
+     "title": "New in Town",
+     "year": 2022,
+     "medium": "acrylic on canvas",
+     "size": "48\" x 36\"",
+     "price": "$3,500",
+     "sold": false,
+     "w": 1489,
+     "h": 2024,
+     "palette": [
+      "#cdc5c8",
+      "#688e8b",
+      "#404a4e",
+      "#2a2e2f",
+      "#17130e"
+     ]
+    },
+    {
+     "slug": "the-narcissist",
+     "title": "The Narcissist",
+     "year": 2022,
+     "medium": "acrylic on canvas",
+     "size": "48\" x 36\"",
+     "price": "$3,500",
+     "sold": false,
+     "w": 1489,
+     "h": 2024,
+     "palette": [
+      "#d5ac6a",
+      "#8f9598",
+      "#076760",
+      "#16384f",
+      "#1a1818"
+     ]
+    },
+    {
+     "slug": "alone-at-night",
+     "title": "Alone at Night",
+     "year": 2022,
+     "medium": "acrylic on canvas",
+     "size": "48\" x 36\"",
+     "price": "$3,500",
+     "sold": true,
+     "w": 1489,
+     "h": 2025,
+     "palette": [
+      "#acc3ab",
+      "#e07f57",
+      "#7a9f8f",
+      "#453a39",
+      "#242221"
+     ]
+    },
+    {
+     "slug": "faces-in-the-crowd",
+     "title": "Faces in the Crowd",
+     "year": 2022,
+     "medium": "acrylic on canvas",
+     "size": "48\" x 36\"",
+     "price": "$3,500",
+     "sold": false,
+     "w": 1488,
+     "h": 2024,
+     "palette": [
+      "#dfbb9c",
+      "#976e5a",
+      "#4a3f3c",
+      "#123a3d",
+      "#1c1a1a"
+     ]
+    },
+    {
+     "slug": "in-my-own-world",
+     "title": "In My Own World",
+     "year": 2022,
+     "medium": "acrylic on canvas",
+     "size": "48\" x 36\"",
+     "price": "$3,500",
+     "sold": true,
+     "w": 1488,
+     "h": 2024,
+     "palette": [
+      "#cf9c8e",
+      "#8a787a",
+      "#83574c",
+      "#3f4950",
+      "#0d0c0e"
+     ]
+    },
+    {
+     "slug": "beautiful-mind",
+     "title": "Beautiful Mind",
+     "year": 2022,
+     "medium": "acrylic on canvas",
+     "size": "48\" x 36\"",
+     "price": "$3,500",
+     "sold": true,
+     "w": 1488,
+     "h": 2024,
+     "palette": [
+      "#c4b4ae",
+      "#7a7679",
+      "#4b6771",
+      "#3b3d40",
+      "#151518"
+     ]
+    }
+   ]
+  }
+ ]
+}
