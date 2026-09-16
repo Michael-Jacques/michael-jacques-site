@@ -91,8 +91,24 @@ Custom domain box, saving, retyping it, and saving again. Check progress with:
 gh api repos/Michael-Jacques/michael-jacques-site/pages --jq '{status,cname,cert:.https_certificate.state}'
 ```
 
-## Newsletter form
+## Contact form
 
-The signup form has no backend. It opens a pre-filled mail draft. To wire it to
-a real service, put the endpoint in the form's `action` attribute in
-`build.py` (`newsletter()`); `main.js` hands off to a real action when one is set.
+Every inquiry is addressed to the email in `site.json`. The contact form and the
+newsletter both post to `form_endpoint`; leave it empty and they fall back to
+opening a pre-filled mail draft, so nothing is ever a dead end.
+
+**Mailto alone loses leads.** A visitor with no mail client configured clicks
+Inquire and nothing happens, silently. Set an endpoint so the form actually
+posts:
+
+1. Get a free endpoint from [Formspree](https://formspree.io) or
+   [Web3Forms](https://web3forms.com) using michaelsjacques@gmail.com.
+2. Put the URL in `form_endpoint` in `site.json`.
+3. `./publish.sh "turn on the contact form"`
+
+Inquire on a painting links to `contact.html?work=<slug>`, and the form fills in
+that painting's title, size and price from `assets/works.json`, so you know what
+someone is asking about without them typing it.
+
+The form carries a honeypot field for spam bots. If a send fails it shows the
+email address rather than swallowing the message.

@@ -158,15 +158,76 @@
     }));
   }
 
-  /* newsletter: posts to the form action if one is configured, otherwise opens a mail draft */
+  /* Forms post to the configured endpoint. With none set they fall back to
+     opening a mail draft, so an inquiry still reaches the studio either way. */
+  const mailFallback = (to, subject, body) => {
+    location.href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
+  const enquiry = $('#enquiry');
+  if (enquiry) {
+    // arriving from a painting: say which one, and why
+    const slug = new URLSearchParams(location.search).get('work');
+    if (slug) {
+      // contact.html sits at the root, so keep this path relative
+      fetch('assets/works.json').then(r => r.ok ? r.json() : null).then(all => {
+        const w = all && all[slug];
+        if (!w) return;
+        $('#f-about').value = `${w.title} (${w.year}) — ${w.size}, ${w.price}`;
+        const msg = $('#f-message');
+        if (!msg.value) msg.value = `I'd like to know more about ${w.title}.`;
+      }).catch(() => {});
+    }
+
+    enquiry.addEventListener('submit', async (e) => {
+      const ok = $('.form-ok', enquiry), err = $('.form-err', enquiry);
+      const btn = $('button[type=submit]', enquiry);
+      const endpoint = enquiry.getAttribute('action');
+      if (!endpoint) {
+        e.preventDefault();
+        const d = new FormData(enquiry);
+        mailFallback(enquiry.dataset.mailto,
+          `Inquiry from ${d.get('name') || 'the website'}${d.get('about') ? ' — ' + d.get('about') : ''}`,
+          `${d.get('message')}\n\n— ${d.get('name')} (${d.get('email')})`);
+        ok.hidden = false; err.hidden = true;
+        return;
+      }
+      e.preventDefault();
+      btn.disabled = true; btn.textContent = 'Sending…'; err.hidden = true;
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST', body: new FormData(enquiry), headers: { Accept: 'application/json' }
+        });
+        if (!res.ok) throw new Error(res.status);
+        enquiry.reset(); ok.hidden = false;
+        btn.hidden = true; $('.form-note', enquiry).hidden = true;
+      } catch (_) {
+        err.hidden = false;
+        btn.disabled = false; btn.textContent = 'Send inquiry →';
+      }
+    });
+  }
+
   const nf = $('.news-form');
-  if (nf) nf.addEventListener('submit', (e) => {
-    if (nf.getAttribute('action')) return; // real endpoint configured
-    e.preventDefault();
+  if (nf) nf.addEventListener('submit', async (e) => {
+    const thanks = $('.thanks', nf.parentElement);
     const email = $('input[type=email]', nf).value.trim();
-    const to = nf.dataset.mailto;
-    location.href = `mailto:${to}?subject=${encodeURIComponent('Add me to the studio list')}&body=${encodeURIComponent('Please add ' + email + ' to the newsletter.')}`;
-    $('.thanks', nf.parentElement).style.display = 'block';
+    const endpoint = nf.getAttribute('action');
+    e.preventDefault();
+    if (!endpoint) {
+      mailFallback(nf.dataset.mailto, 'Add me to the studio list', `Please add ${email} to the newsletter.`);
+      thanks.style.display = 'block';
+      return;
+    }
+    try {
+      const res = await fetch(endpoint, {
+        method: 'POST', body: new FormData(nf), headers: { Accept: 'application/json' }
+      });
+      if (!res.ok) throw new Error(res.status);
+      nf.reset(); nf.hidden = true; thanks.style.display = 'block';
+    } catch (_) {
+      mailFallback(nf.dataset.mailto, 'Add me to the studio list', `Please add ${email} to the newsletter.`);
+    }
   });
 
   /* back to top */

@@ -63,7 +63,7 @@ def header(current='', blend=False):
   <a class="brand brand--mark" href="/" aria-label="Michael Jacques">MJ</a>
   <div class="nav-right">
     <a href="https://www.instagram.com/{S['instagram']}/" target="_blank" rel="noopener">Instagram</a>
-    <a href="{mailto()}">Inquire</a>
+    <a href="/contact.html">Inquire</a>
   </div>
   <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
 </header>
@@ -86,7 +86,8 @@ def newsletter():
     <h2>Become a collector</h2>
     <p>A studio note every month or so. New paintings before they go anywhere else, show dates, and the occasional look at what’s on the easel. Short, and only when there’s something to say.</p>
     <p class="fine">(Collectors on the list see new work first.)</p>
-    <form class="news-form" data-mailto="{S['email']}" method="post">
+    <form class="news-form" data-mailto="{S['email']}"{' action="' + S['form_endpoint'] + '"' if S.get('form_endpoint') else ''} method="post">
+      <input type="hidden" name="about" value="Newsletter signup">
       <input type="email" name="email" placeholder="your email" required aria-label="Email address">
       <button type="submit">subscribe →</button>
     </form>
@@ -144,7 +145,7 @@ def page_home():
     series_imgs = ''.join(f'<img data-key="{s["slug"]}" class="{"active" if i == 0 else ""}" src="/assets/{s["install"]}.webp" alt="{e(s["name"])}, installation view" loading="lazy">' for i, s in enumerate(S['series']))
     series_txt = ''.join(f'<p data-key="{s["slug"]}" class="mono-p {"active" if i == 0 else ""}">{e(s["blurb"])}</p>' for i, s in enumerate(S['series']))
     coll_btns = ''.join(f'<li><button data-key="{c["key"]}" class="{"active" if i == 0 else ""}">{e(c["title"])}</button></li>' for i, c in enumerate(S['collecting']))
-    coll_body = ''.join(f'<div data-key="{c["key"]}" class="{"active" if i == 0 else ""}"><p>{e(c["text"])}</p><a class="u" href="{mailto()}">Get in touch</a></div>' for i, c in enumerate(S['collecting']))
+    coll_body = ''.join(f'<div data-key="{c["key"]}" class="{"active" if i == 0 else ""}"><p>{e(c["text"])}</p><a class="u" href="/contact.html">Get in touch</a></div>' for i, c in enumerate(S['collecting']))
     explore = [('work', '/work.html', 'All Work', f'Every painting from all four series, {len(ALL)} in total. Filter by series, year, size, or availability.'),
                ('series', f'/series/{new["slug"]}.html', 'Under My Own Skin', 'The 2025 series. Four new paintings, two still available.'),
                ('shows', '/about.html#shows', 'Exhibitions', 'Fairs and shows from Miami to Brooklyn to Los Angeles, 2022 to now.'),
@@ -262,8 +263,9 @@ def page_work_detail(w):
     same = [x for x in ALL if x['series']['slug'] == s['slug'] and x['slug'] != w['slug']][:4]
     other = [x for x in ALL if x['series']['slug'] != s['slug'] and not x['sold']][:4]
     price = '<span class="sold">Sold</span>' if w['sold'] else e(w['price'])
-    cta = (f'<a class="btn btn--fill" href="{mailto(w)}">Inquire →</a><small>Replies within a day. Shipping quoted per piece.</small>' if not w['sold']
-           else f'<a class="btn" href="{mailto(w)}">Ask about similar work →</a><small>This painting has found a home.</small>')
+    q = f"/contact.html?work={w['slug']}"
+    cta = (f'<a class="btn btn--fill" href="{q}">Inquire →</a><small>Replies within a day. Shipping quoted per piece.</small>' if not w['sold']
+           else f'<a class="btn" href="{q}">Ask about similar work →</a><small>This painting has found a home.</small>')
     return head(f'{w["title"]} ({w["year"]}) · Michael Jacques', f'{w["title"]}, {w["year"]}. {w["medium"].capitalize()}, {w["size"]}. From the series {s["name"]}.', f'/works/{w["slug"]}.html', img(w)) + header('/work.html', blend=True) + f"""
 <section class="work-hero">
   <div class="work-view">
@@ -324,13 +326,26 @@ def page_contact():
   <p class="lede rv">Press, collectors, designers, and anyone who wants to see a painting in person. Email is the fastest way in.</p>
 </section>
 <section class="contact">
-  <dl class="rv">
-    <div class="row"><dt>Email</dt><dd><a href="mailto:{S['email']}">{S['email']}</a></dd></div>
-    <div class="row"><dt>Phone</dt><dd><a href="tel:{re.sub('[^0-9+]','',S['phone'])}">{S['phone']}</a></dd></div>
-    <div class="row"><dt>Instagram</dt><dd><a href="https://www.instagram.com/{S['instagram']}/" target="_blank" rel="noopener">@{S['instagram']}</a></dd></div>
-    <div class="row"><dt>Studio</dt><dd>Miami, FL · by appointment</dd></div>
-  </dl>
-  <div class="aside rv"><p>For available work, send the title and I’ll reply with details, a studio video, and a shipping quote. For commissions and trade projects, a few lines about the space and the timeline is the best place to start.</p><p><a class="btn" href="{mailto()}">Start an inquiry →</a></p></div>
+  <form class="enquiry rv" id="enquiry"{' action="' + S['form_endpoint'] + '" method="post"' if S.get('form_endpoint') else ''} data-mailto="{S['email']}">
+    <div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
+    <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+    <div class="field"><label for="f-about">About</label><input id="f-about" name="about" type="text" placeholder="a painting, a commission, a studio visit"></div>
+    <div class="field"><label for="f-message">Message</label><textarea id="f-message" name="message" rows="5" required></textarea></div>
+    <p class="hp" aria-hidden="true"><label>Leave this empty<input name="_gotcha" tabindex="-1" autocomplete="off"></label></p>
+    <button class="btn btn--fill" type="submit">Send inquiry →</button>
+    <p class="form-note">Goes straight to the studio. Replies within a day.</p>
+    <p class="form-ok" role="status" hidden>Thanks — that’s with me. I’ll come back to you within a day.</p>
+    <p class="form-err" role="alert" hidden>That didn’t send. Email <a href="mailto:{S['email']}">{S['email']}</a> instead and it’ll reach me.</p>
+  </form>
+  <div class="rv">
+    <dl>
+      <div class="row"><dt>Email</dt><dd><a href="mailto:{S['email']}">{S['email']}</a></dd></div>
+      <div class="row"><dt>Phone</dt><dd><a href="tel:{re.sub('[^0-9+]','',S['phone'])}">{S['phone']}</a></dd></div>
+      <div class="row"><dt>Instagram</dt><dd><a href="https://www.instagram.com/{S['instagram']}/" target="_blank" rel="noopener">@{S['instagram']}</a></dd></div>
+      <div class="row"><dt>Studio</dt><dd>Miami, FL · by appointment</dd></div>
+    </dl>
+    <p class="aside">For available work, send the title and I’ll reply with details, a studio video, and a shipping quote. For commissions and trade projects, a few lines about the space and the timeline is the best place to start.</p>
+  </div>
 </section>
 {footer()}"""
 
@@ -369,7 +384,14 @@ write('robots.txt', f"User-agent: *\nAllow: /\nSitemap: {S['domain']}/sitemap.xm
 urls = ['/', '/work.html', '/about.html', '/contact.html'] \
      + [f'/series/{s_["slug"]}.html' for s_ in S['series']] \
      + [f'/works/{w["slug"]}.html' for w in ALL]
+write('assets/works.json', json.dumps({w['slug']: {'title': w['title'], 'year': w['year'], 'series': w['series']['name'], 'size': w['size'], 'price': ('Sold' if w['sold'] else w['price'])} for w in ALL}, ensure_ascii=False))
 write('sitemap.xml', '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
       + ''.join(f'  <url><loc>{S["domain"]}{u}</loc></url>\n' for u in urls) + '</urlset>\n')
 write('assets/favicon.svg', '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" fill="#f9f8f2"/><text x="32" y="44" text-anchor="middle" font-family="Georgia,serif" font-style="italic" font-size="34" fill="#121212">MJ</text></svg>')
+import shutil as _sh, subprocess as _sp
+if _sh.which('node'):
+    _r = _sp.run(['node', '--check', str(ROOT / 'main.js')], capture_output=True, text=True)
+    if _r.returncode:
+        raise SystemExit('main.js has a syntax error, refusing to build:\n' + _r.stderr)
+
 print(f'built: 4 pages + {len(S["series"])} series + {len(ALL)} works')
