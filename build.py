@@ -130,8 +130,13 @@ def cards(ws, price=True):
 
 # ---------------------------------------------------------------- pages
 def page_home():
-    new = S['series'][0]                     # newest series — drives the "New Work" row
-    hero = next((s for s in S['series'] if s['slug'] == S.get('hero_series')), new)
+    newest = S['series'][0]
+    # the row under the hero, and the carousel inside it, are each pinned by slug
+    feat = next((s for s in S['series'] if s['slug'] == S.get('featured_series')), newest)
+    hero = next((s for s in S['series'] if s['slug'] == S.get('hero_series')), newest)
+    new = feat                               # the row's series
+    feat_heading = 'New Work' if feat is newest else 'Selected Work'
+    feat_avail = sum(1 for w in feat['works'] if not w['sold'])
     slides = ''.join(
         f'<a href="/works/{w["slug"]}.html" class="{"active" if i == 0 else ""}"><span class="hero-cap">{i+1}/{len(hero["works"])} {e(w["title"])}</span>'
         # only the first two are fetched up front; main.js loads the rest just before they show
@@ -147,7 +152,8 @@ def page_home():
     coll_btns = ''.join(f'<li><button data-key="{c["key"]}" class="{"active" if i == 0 else ""}">{e(c["title"])}</button></li>' for i, c in enumerate(S['collecting']))
     coll_body = ''.join(f'<div data-key="{c["key"]}" class="{"active" if i == 0 else ""}"><p>{e(c["text"])}</p><a class="u" href="/contact.html">Get in touch</a></div>' for i, c in enumerate(S['collecting']))
     explore = [('work', '/work.html', 'All Work', f'Every painting from all four series, {len(ALL)} in total. Filter by series, year, size, or availability.'),
-               ('series', f'/series/{new["slug"]}.html', 'Under My Own Skin', 'The 2025 series. Four new paintings, two still available.'),
+               ('series', f'/series/{feat["slug"]}.html', feat['name'],
+                f'The {feat["year"]} series. {len(feat["works"])} paintings, {feat_avail} still available.'),
                ('shows', '/about.html#shows', 'Exhibitions', 'Fairs and shows from Miami to Brooklyn to Los Angeles, 2022 to now.'),
                ('about', '/about.html', 'About the Artist', 'Self-taught, Miami-based, built from a background in design and experiential art.'),
                ('contact', '/contact.html', 'Contact', 'Press, collectors, designers, and studio visits. Email is fastest.')]
@@ -175,7 +181,7 @@ def page_home():
 
 <section class="section">
   <div class="section-head rv">
-    <div><h2>New Work</h2><p class="mono-p">{e(new['name'])}, {new['year']}. {len(new['works'])} paintings, acrylic on canvas.</p></div>
+    <div><h2>{feat_heading}</h2><p class="mono-p">{e(new['name'])}, {new['year']}. {len(new['works'])} paintings, acrylic on canvas.</p></div>
     <a class="btn" href="/series/{new['slug']}.html">See the series</a>
   </div>
   {cards([dict(w, series=new) for w in new['works']])}

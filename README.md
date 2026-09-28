@@ -23,6 +23,17 @@ a minute. Add `--images` when you've dropped new photos into `assets/src`.
 All content lives in `site.json`. Nothing is hard-coded in the templates except
 layout.
 
+Two settings pick which series the homepage shows, each by slug:
+
+| Setting | Controls |
+| --- | --- |
+| `hero_series` | the paintings that rotate in the hero |
+| `featured_series` | the row of cards under it |
+
+The row is titled "New Work" only when it points at the newest series, and
+"Selected Work" otherwise, so the heading never claims a 2023 series is new.
+The "Explore the studio" link and its blurb follow `featured_series` too.
+
 ```bash
 python3 build.py
 ```
