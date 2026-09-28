@@ -126,7 +126,8 @@ def size_bucket(w):
     return 'small' if m < 30 else ('medium' if m < 48 else 'large')
 
 def cards(ws, price=True):
-    return '<div class="cards">' + ''.join(card(w, price) for w in ws) + '</div>'
+    return (f'<div class="cards" data-count="{len(ws)}" style="--cols:{min(len(ws), 4)}">'
+            + ''.join(card(w, price) for w in ws) + '</div>')
 
 # ---------------------------------------------------------------- pages
 def page_home():
@@ -137,6 +138,8 @@ def page_home():
     new = feat                               # the row's series
     feat_heading = 'New Work' if feat is newest else 'Selected Work'
     feat_avail = sum(1 for w in feat['works'] if not w['sold'])
+    n = S.get('featured_count') or len(feat['works'])
+    feat_preview = feat['works'][-n:]         # the most recent end of the series
     slides = ''.join(
         f'<a href="/works/{w["slug"]}.html" class="{"active" if i == 0 else ""}"><span class="hero-cap">{i+1}/{len(hero["works"])} {e(w["title"])}</span>'
         # only the first two are fetched up front; main.js loads the rest just before they show
@@ -181,10 +184,10 @@ def page_home():
 
 <section class="section">
   <div class="section-head rv">
-    <div><h2>{feat_heading}</h2><p class="mono-p">{e(new['name'])}, {new['year']}. {len(new['works'])} paintings, acrylic on canvas.</p></div>
+    <div><h2>{feat_heading}</h2><p class="mono-p">{e(new['name'])}, {new['year']}. {('Three of ' + str(len(new['works'])) + ' paintings') if len(feat_preview) < len(new['works']) else (str(len(new['works'])) + ' paintings')}, acrylic on canvas.</p></div>
     <a class="btn" href="/series/{new['slug']}.html">See the series</a>
   </div>
-  {cards([dict(w, series=new) for w in new['works']])}
+  {cards([dict(w, series=new) for w in feat_preview])}
 </section>
 
 <section class="banner">

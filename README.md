@@ -29,9 +29,12 @@ Two settings pick which series the homepage shows, each by slug:
 | --- | --- |
 | `hero_series` | the paintings that rotate in the hero |
 | `featured_series` | the row of cards under it |
+| `featured_count` | how many of that series the row previews (from the end); omit for all |
 
 The row is titled "New Work" only when it points at the newest series, and
 "Selected Work" otherwise, so the heading never claims a 2023 series is new.
+When it previews part of a series the subtitle says so, and the row sizes its
+own columns, dropping to one full-width painting on a phone.
 The "Explore the studio" link and its blurb follow `featured_series` too.
 
 ```bash

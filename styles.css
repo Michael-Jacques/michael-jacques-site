@@ -115,7 +115,7 @@ h1,h2,h3,h4{font-weight:400;margin:0;font-family:var(--serif);letter-spacing:-.0
 .section-head .btn{flex:none}
 
 /* work cards */
-.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+.cards{display:grid;grid-template-columns:repeat(var(--cols,4),minmax(0,1fr));gap:28px}
 .card{display:block}
 .card__img{display:flex;align-items:center;justify-content:center;aspect-ratio:1/1.04;background:var(--cream)}
 .card__img img{max-height:100%;max-width:100%;width:auto;height:auto;object-fit:contain;transition:transform .7s var(--ease);box-shadow:0 14px 34px -20px rgba(0,0,0,.4)}
@@ -378,6 +378,11 @@ h1,h2,h3,h4{font-weight:400;margin:0;font-family:var(--serif);letter-spacing:-.0
   .foot-grid .right{text-align:left}
   .next-series{grid-template-columns:1fr auto}
   .next-series .label{grid-column:1/-1}
+}
+/* a short preview row gets one big painting per screen on a phone,
+   rather than three postage stamps */
+@media (max-width:640px){
+  .cards[data-count="2"],.cards[data-count="3"]{grid-template-columns:minmax(0,1fr)}
 }
 @media (max-width:520px){
   .cards{grid-template-columns:1fr 1fr}
