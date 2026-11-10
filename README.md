@@ -126,3 +126,24 @@ someone is asking about without them typing it.
 
 The form carries a honeypot field for spam bots. If a send fails it shows the
 email address rather than swallowing the message.
+
+## Availability PDF
+
+A tearsheet for a gallery, consultant or hotel art buyer: cover, bio, every
+unsold work with its image, size, price and whereabouts, then contact details.
+
+```bash
+python3 tools/availability_pdf.py
+python3 tools/availability_pdf.py --to "Hotel Art Advisory"
+python3 tools/availability_pdf.py --only new-york
+```
+
+It writes to `exports/` (git-ignored) and regenerates from `site.json`, so
+marking a piece sold and re-running is all it takes to refresh the list.
+
+**Where each canvas physically is** lives in `LOCATIONS` at the top of
+`tools/availability_pdf.py`. Miami is the default; only pieces that have
+travelled need an entry.
+
+Sizes are printed height × width and the orientation is checked against the
+photograph, so a transposed entry is corrected rather than sent to a buyer.
