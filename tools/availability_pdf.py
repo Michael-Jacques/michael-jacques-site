@@ -49,8 +49,21 @@ def font_face(file: Path) -> str:
             f"font-weight:{weight};src:url({data_uri(file)}) format('woff2')}}")
 
 
-def print_image(slug: str, series_slug: str) -> str:
-    """Re-encode the web asset down to print size, as a JPEG data URI."""
+# Printed size of the box each painting sits in, in mm. Letter page, 14mm side
+# margins, two columns with a 10mm gutter, 3mm of mount inside the plate.
+PLATE_W = 82.9
+PLATE_H = 56.0
+
+
+def print_image(slug: str, series_slug: str, fit=None):
+    """Re-encode the web asset to print size and work out how big to draw it.
+
+    Returns (data uri, css). Percentage max-height on an image inside a flex
+    box is unreliable in print layout — it let the element keep its natural
+    box, so the drop shadow painted a grey slab around the artwork and spilled
+    outside the plate. Giving the element an exact width and height in mm takes
+    the guesswork out of it.
+    """
     from PIL import Image
     src = ROOT / 'assets' / 'work' / series_slug / f'{slug}.webp'
     im = Image.open(src).convert('RGB')
@@ -58,7 +71,22 @@ def print_image(slug: str, series_slug: str) -> str:
     tmp = OUT / '.print' / f'{slug}.jpg'
     tmp.parent.mkdir(parents=True, exist_ok=True)
     im.save(tmp, 'JPEG', quality=86, optimize=True)
-    return data_uri(tmp)
+    uri = data_uri(tmp)
+    if fit is None:
+        return uri
+    w, h = im.size
+    scale = min(fit[0] / w, fit[1] / h)
+    return uri, f'width:{w * scale:.2f}mm;height:{h * scale:.2f}mm'
+
+
+def cover_image(site, slug=None):
+    """The painting across the top of the cover."""
+    slug = slug or site.get('cover_work') or 'higher-self'
+    for series in site['series']:
+        for w in series['works']:
+            if w['slug'] == slug:
+                return print_image(slug, series['slug'])
+    sys.exit(f'no work called {slug!r}')
 
 
 def dimensions(w):
@@ -97,13 +125,13 @@ def collect(site, only=None):
     return works
 
 
-def build_html(site, works, to=None):
+def build_html(site, works, to=None, cover=None):
     e = lambda s: (str(s).replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;'))
     fonts = ''.join(font_face(f) for f in sorted(FONTS.glob('*.woff2')))
     today = date.today().strftime('%B %Y')
     cities = [c for c in ORDER if any(w['city'] == c for w in works)]
     by_city = {c: [w for w in works if w['city'] == c] for c in cities}
-    cover_img = print_image('introspection', 'everything')
+    cover_img = cover_image(site, cover)
 
     def tally(c):
         n = len(by_city[c])
@@ -118,9 +146,10 @@ def build_html(site, works, to=None):
   </div>
   <div class="grid">'''
         for w in by_city[city]:
+            uri, box = print_image(w['slug'], w['series_slug'], (PLATE_W, PLATE_H))
             cards += f'''
     <figure class="work">
-      <div class="plate"><img src="{print_image(w['slug'], w['series_slug'])}" alt="{e(w['title'])}"></div>
+      <div class="plate"><img src="{uri}" style="{box}" alt="{e(w['title'])}"></div>
       <figcaption>
         <h3>{e(w['title'])}<span class="yr">, {w['year']}</span></h3>
         <p class="series">{e(w['series'])}</p>
@@ -202,9 +231,8 @@ dl dd span{{display:block;font-family:'PlexMono',monospace;font-size:7.2pt;
 .grid{{display:grid;grid-template-columns:1fr 1fr;gap:9mm 10mm}}
 .work{{margin:0;page-break-inside:avoid;break-inside:avoid}}
 .plate{{height:62mm;display:flex;align-items:center;justify-content:center;
-       background:#f3f1ea;padding:3mm;margin-bottom:3mm}}
-.plate img{{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;
-           box-shadow:0 1.4mm 3.5mm rgba(0,0,0,.26)}}
+       background:#f3f1ea;padding:3mm;margin-bottom:3mm;overflow:hidden}}
+.plate img{{display:block;box-shadow:0 1.2mm 3mm rgba(0,0,0,.24)}}
 .work h3{{font-size:11.5pt;line-height:1.2}}
 .work .yr{{color:#6b6a66}}
 .work .series{{margin:.6mm 0 2mm;font-style:italic;font-size:9.5pt;color:#3a3a38}}
@@ -299,6 +327,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--to', help='name to print on the cover')
     ap.add_argument('--only', help='one city slug, e.g. new-york')
+    ap.add_argument('--cover', help='slug of the painting on the cover')
     ap.add_argument('--out', default='Michael-Jacques-Available-Works.pdf')
     a = ap.parse_args()
 
@@ -309,7 +338,7 @@ def main():
 
     OUT.mkdir(exist_ok=True)
     html_path = OUT / '.availability.html'
-    html_path.write_text(build_html(site, works, a.to), encoding='utf-8')
+    html_path.write_text(build_html(site, works, a.to, a.cover), encoding='utf-8')
 
     chrome = next((c for c in CHROME if Path(c).exists()), None)
     if not chrome:

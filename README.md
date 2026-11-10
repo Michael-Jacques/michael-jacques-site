@@ -147,3 +147,9 @@ travelled need an entry.
 
 Sizes are printed height × width and the orientation is checked against the
 photograph, so a transposed entry is corrected rather than sent to a buyer.
+
+Pick the cover painting with `--cover <slug>`; it defaults to `cover_work` in
+`site.json`, then to Higher Self. Each painting is drawn at an exact width and
+height in millimetres computed from its own aspect ratio — a percentage
+max-height inside a flex box is unreliable in print, and left the image element
+oversized so its drop shadow painted a grey slab around the artwork.
