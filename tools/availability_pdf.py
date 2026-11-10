@@ -232,7 +232,11 @@ dl dd span{{display:block;font-family:'PlexMono',monospace;font-size:7.2pt;
 .work{{margin:0;page-break-inside:avoid;break-inside:avoid}}
 .plate{{height:62mm;display:flex;align-items:center;justify-content:center;
        background:#f3f1ea;padding:3mm;margin-bottom:3mm;overflow:hidden}}
-.plate img{{display:block;box-shadow:0 1.2mm 3mm rgba(0,0,0,.24)}}
+.plate img{{display:block}}
+/* No drop shadow: Chrome's PDF printer rasterises box-shadow as its own
+   bitmap, which prints as a hard grey slab around the painting rather
+   than a soft edge. A hairline keeps the artwork defined instead. */
+.plate img{{outline:.25pt solid rgba(18,18,18,.22);outline-offset:0}}
 .work h3{{font-size:11.5pt;line-height:1.2}}
 .work .yr{{color:#6b6a66}}
 .work .series{{margin:.6mm 0 2mm;font-style:italic;font-size:9.5pt;color:#3a3a38}}
